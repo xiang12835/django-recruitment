@@ -47,6 +47,8 @@ export_model_as_csv.short_description = u'导出为CSV文件'
 # 候选人管理类
 class CandidateAdmin(admin.ModelAdmin):
 
+    actions = (export_model_as_csv, )
+
     # 排除一些属性，此时数据库也会没有
     exclude = ('creator', 'created_date', 'modified_date')
 
