@@ -7,6 +7,7 @@ from interview.models import Candidate
 
 
 class Command(BaseCommand):
+    # Django 里面有个 management command 机制，可以直接添加命令行的工具。
     help = '从一个CSV文件的内容中读取候选人列表，导入到数据库中'
 
     def add_arguments(self, parser):
