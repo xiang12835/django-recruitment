@@ -31,3 +31,10 @@ class Job(models.Model):
     creator = models.ForeignKey(User, verbose_name=_("创建人"), null=True, on_delete=models.SET_NULL)
     created_date = models.DateTimeField(verbose_name=_("创建日期"), auto_now_add=True)
     modified_date = models.DateTimeField(verbose_name=_("修改日期"), auto_now=True)
+
+    class Meta:
+        verbose_name = _('职位')
+        verbose_name_plural = _('职位列表')
+
+    def __str__(self):
+        return self.job_name
