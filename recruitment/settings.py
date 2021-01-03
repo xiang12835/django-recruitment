@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_python3_ldap',
     'jobs',
-    'interview',
+    'interview'
 ]
 
 MIDDLEWARE = [
