@@ -1,5 +1,5 @@
 from django.contrib import admin
-from jobs.models import Job
+from job.models import Job
 
 class JobAdmin(admin.ModelAdmin):
     exclude = ('creator','created_date','modified_date')

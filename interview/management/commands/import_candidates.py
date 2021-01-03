@@ -16,7 +16,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         path = kwargs['path']
         with open(path, 'rt') as f: # with open(path, 'rt', encoding="gbk") as f:
-            reader = csv.reader(f, dialect='excel', delimiter=';')
+            reader = csv.reader(f, dialect='excel', delimiter=',')
             for row in reader:
 
                 candidate = Candidate.objects.create(

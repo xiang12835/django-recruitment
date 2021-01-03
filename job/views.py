@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
-from jobs.models import Job
+from job.models import Job
 
 import logging
 
