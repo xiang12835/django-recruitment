@@ -57,14 +57,6 @@ class CandidateAdmin(admin.ModelAdmin):
             'username', 'city', 'bachelor_school','first_score', 'first_result', 'first_interviewer_user', 'second_score',
             'second_result', 'second_interviewer_user', 'hr_score', 'hr_result', 'hr_interviewer_user',)
 
-    # 使用fieldsets进行分组，分组显示字段，
-    # 分三块，基础信息、第一轮面试记录、第二轮面试（专业复试）、HR复试
-    # fieldsets = (
-    #     (None, {'fields': ('userid', 'username',)}),
-    #     ('分组一', {'fields': ('', '',)}),
-    #     ('分组二', {'fields': ('', '',)}),
-    # )
-
     # 右侧筛选条件
     list_filter = (
     'city', 'first_result', 'second_result', 'hr_result', 'first_interviewer_user', 'second_interviewer_user',
@@ -77,6 +69,7 @@ class CandidateAdmin(admin.ModelAdmin):
     ordering = ('hr_result', 'second_result', 'first_result',)
 
     # 分组展示字段，分三块，基础信息、第一轮面试记录、第二轮面试（专业复试）、HR复试
+    # 字段合并操作，从一行到多行的展示，在一行里展示多个字段，直接加刮号
     default_fieldsets = (
         (None, {'fields': (
             "userid", ("username", "city", "phone"),
