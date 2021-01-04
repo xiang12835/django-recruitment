@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from datetime import datetime
 import logging
 import csv
-
+from django.db.models import Q
 from interview.models import Candidate
 
 logger = logging.getLogger(__name__)
@@ -125,6 +125,16 @@ class CandidateAdmin(admin.ModelAdmin):
         if 'interviewer' in group_names and obj.second_interviewer_user == request.user:
             return self.default_fieldsets_second
         return self.default_fieldsets
+
+    # 对于非管理员，非HR，获取自己是一面面试官或者二面面试官的候选人集合:s
+    def get_queryset(self, request):  # show data only owned by the user
+        qs = super(CandidateAdmin, self).get_queryset(request)
+
+        group_names = self.get_group_names(request.user)
+        if request.user.is_superuser or 'hr' in group_names:
+            return qs
+        return Candidate.objects.filter(
+            Q(first_interviewer_user=request.user) | Q(second_interviewer_user=request.user))
 
     # 设置字段只读
     # readonly_fields = ("first_interviewer_user", "second_interviewer_user",)
