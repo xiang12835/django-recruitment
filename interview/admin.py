@@ -94,6 +94,22 @@ class CandidateAdmin(admin.ModelAdmin):
             return ('first_interviewer_user', 'second_interviewer_user',)
         return ()
 
+    # 让 hr 登录后，在列表页就可以修改面试官，提高工作效率。面试官不让修改
+    # list_editable = ('first_interviewer_user','second_interviewer_user',)
+    def get_list_editable(self, request):
+        group_names = self.get_group_names(request.user)
+
+        if request.user.is_superuser or 'hr' in group_names:
+            return ('first_interviewer_user', 'second_interviewer_user',)
+        return ()
+
+    def get_changelist_instance(self, request):
+        """
+        override admin method and list_editable property value
+        with values returned by our custom method implementation.
+        """
+        self.list_editable = self.get_list_editable(request)
+        return super(CandidateAdmin, self).get_changelist_instance(request)
 
     def save_model(self, request, obj, form, change):
         # 在保存模型之前做一些操作，会被自动调用
