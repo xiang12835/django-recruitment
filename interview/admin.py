@@ -76,6 +76,25 @@ class CandidateAdmin(admin.ModelAdmin):
     # 列表页排序字段
     ordering = ('hr_result', 'second_result', 'first_result',)
 
+    # 设置字段只读
+    # readonly_fields = ("first_interviewer_user", "second_interviewer_user",)
+
+    # 需要让hr登录能够修改面试官下拉选择，而面试官登录需要只读
+    def get_group_names(self, user):
+        group_names = []
+        for g in user.groups.all():
+            group_names.append(g.name)
+        return group_names
+
+    def get_readonly_fields(self, request, obj):
+        group_names = self.get_group_names(request.user)
+
+        if 'interviewer' in group_names:
+            logger.info("interviewer is in user's group for %s" % request.user.username)
+            return ('first_interviewer_user', 'second_interviewer_user',)
+        return ()
+
+
     def save_model(self, request, obj, form, change):
         # 在保存模型之前做一些操作，会被自动调用
         obj.last_editor = request.user.username
