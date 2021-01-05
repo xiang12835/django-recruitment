@@ -12,8 +12,8 @@ def send_msg(_content="Hello WeChat"):
     data = json.dumps({
         "msgtype": "text",
         "text": {
+            "mentioned_list": ["@all"],  # 圈出所有人
             "content": _content,  # 发送的消息内容
-            "mentioned_list": ["@all"]  # 圈出所有人
         }
     })
 
