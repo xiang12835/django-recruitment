@@ -93,7 +93,7 @@ class CandidateAdmin(admin.ModelAdmin):
     # 列表页排序字段
     ordering = ('hr_result', 'second_result', 'first_result',)
 
-    def get_resume(self, obj):  # 列表页中的引用方法来展示
+    def get_resume(self, obj):  # 列表页中的字段展示，还可以列表页中的引用方法来展示
         if not obj.phone:
             return ""
         resumes = Resume.objects.filter(phone=obj.phone)
