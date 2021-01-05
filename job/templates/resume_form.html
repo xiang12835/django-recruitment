@@ -12,7 +12,7 @@
     {% csrf_token %}
 {#    {% bootstrap_form form %}#}
 
-    {{ form.as_p }}
+    {{ form.as_p }}{#将上下文传过来的表单转化为要展示的HTML内容#}
 
 {#    {% buttons %}#}
     <button type="submit" class="btn btn-primary">
