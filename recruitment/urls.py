@@ -20,9 +20,19 @@ from django.utils.translation import gettext_lazy as _
 
 
 urlpatterns = [
+
+    # 职位管理 url
     path("", include("job.urls")),
+
+    # grappelli 风格主题 url
     path('grappelli/', include('grappelli.urls')),
+
+    # 后台管理系统 url
     path('admin/', admin.site.urls),
+
+    # 候选人注册登录 url
+    path('accounts/', include('registration.backends.simple.urls')),
+
 ]
 
 
