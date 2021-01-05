@@ -17,7 +17,7 @@ from django.conf import settings
 # 机器人的链接
 # wx_url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=cc41413d-6a15-4fe0-ba3d-8d666f44ca59"
 
-webhook = settings.DINGTALK_WEB_HOOK
+webhook = settings.ENTERPRISE_WECHAT_WEB_HOOK
 
 
 def send_msg(_content="Hello WeChat"):
