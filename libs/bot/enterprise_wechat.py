@@ -1,9 +1,23 @@
 import json
 import requests
+from django.conf import settings
+
+
+""" 正式线配置 crontab
+
+ crontab -e
+
+ 30 17 * * * /usr/bin/python /data/github/awesome-platform/background/bot/enterprise_wechat.py > /data/logs/enterprise_wechat.log 2>&1
+
+ crontab -l
+
+"""
 
 
 # 机器人的链接
-wx_url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=cc41413d-6a15-4fe0-ba3d-8d666f44ca59"
+# wx_url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=cc41413d-6a15-4fe0-ba3d-8d666f44ca59"
+
+webhook = settings.DINGTALK_WEB_HOOK
 
 
 def send_msg(_content="Hello WeChat"):
@@ -18,7 +32,7 @@ def send_msg(_content="Hello WeChat"):
     })
 
     # 指定机器人发送消息
-    r = requests.post(wx_url, data, auth=('Content-Type', 'application/json'))
+    r = requests.post(webhook, data, auth=('Content-Type', 'application/json'))
     print(r.json)
 
     # headers = {"Content-Type": "text/plain"}

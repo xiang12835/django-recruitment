@@ -7,7 +7,7 @@ import logging
 import csv
 from django.db.models import Q
 from interview.models import Candidate
-from libs import dingtalk
+from libs.bot import dingtalk
 
 logger = logging.getLogger(__name__)
 
