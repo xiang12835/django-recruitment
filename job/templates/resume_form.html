@@ -1,22 +1,22 @@
 {# Load the tag library #}
-{#{% load bootstrap4 %}#}
+{% load bootstrap4 %}
 
 {# Load CSS and JavaScript #}
-{#{% bootstrap_css %}#}
-{#{% bootstrap_javascript jquery='full' %}#}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
 
 {# Display django.contrib.messages as Bootstrap alerts #}
-{#{% bootstrap_messages %}#}
+{% bootstrap_messages %}
 
 <form method="post" method="post" class="form" enctype="multipart/form-data" style="width:600px;margin-left:5px">
     {% csrf_token %}
-{#    {% bootstrap_form form %}#}
+    {% bootstrap_form form %}
 
-    {{ form.as_p }}{#将上下文传过来的表单转化为要展示的HTML内容#}
+{#    {{ form.as_p }} 将上下文传过来的表单转化为要展示的HTML内容#}
 
-{#    {% buttons %}#}
+    {% buttons %}
     <button type="submit" class="btn btn-primary">
       提交
     </button>
-{#    {% endbuttons %}#}
+    {% endbuttons %}
 </form>

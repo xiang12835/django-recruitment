@@ -36,6 +36,7 @@ SIMPLE_BACKEND_REDIRECT_URL = '/accounts/login/'
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap4',
     'registration',
     'grappelli',
     'django.contrib.admin',
