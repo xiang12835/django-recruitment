@@ -7,7 +7,9 @@ import logging
 import csv
 from django.db.models import Q
 from interview.models import Candidate
+from job.models import Resume
 from libs.bot import dingtalk
+from django.utils.safestring import mark_safe
 
 logger = logging.getLogger(__name__)
 
@@ -77,7 +79,7 @@ class CandidateAdmin(admin.ModelAdmin):
 
     # list_display  # 列表页中的字段展示
     list_display = (
-            'username', 'city', 'bachelor_school','first_score', 'first_result', 'first_interviewer_user', 'second_score',
+            'username', 'city', 'bachelor_school', 'get_resume','first_score', 'first_result', 'first_interviewer_user', 'second_score',
             'second_result', 'second_interviewer_user', 'hr_score', 'hr_result', 'hr_interviewer_user',)
 
     # 右侧筛选条件
@@ -90,6 +92,17 @@ class CandidateAdmin(admin.ModelAdmin):
 
     # 列表页排序字段
     ordering = ('hr_result', 'second_result', 'first_result',)
+
+    def get_resume(self, obj):  # 列表页中的函数展示
+        if not obj.phone:
+            return ""
+        resumes = Resume.objects.filter(phone=obj.phone)
+        if resumes and len(resumes) > 0:
+            return mark_safe(u'<a href="/resume/%s" target="_blank">%s</a' % (resumes[0].id, "查看简历"))
+        return ""
+
+    get_resume.short_description = '查看简历'
+    get_resume.allow_tags = True
 
     # 分组展示字段，分三块，基础信息、第一轮面试记录、第二轮面试（专业复试）、HR复试
     # 字段合并操作，从一行到多行的展示，在一行里展示多个字段，直接加刮号
