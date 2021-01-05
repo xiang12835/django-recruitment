@@ -1,6 +1,9 @@
-from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
-from job.models import Job
+from django.views.generic import CreateView
+
+from job.models import Job, Resume
 
 import logging
 
@@ -8,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
-def job_list(request):
+def job_list(request): # 方法视图
     job_list = Job.objects.order_by('job_type')
     context =  {'job_list': job_list}
     for job in job_list:
@@ -26,3 +29,27 @@ def job_detail(request, job_id):
         raise Http404("Job does not exist")
     return render(request, 'job_detail.html', {'job': job})
 
+
+class ResumeCreateView(LoginRequiredMixin, CreateView): # 简历的创建视图，是一个类视图
+    """    简历职位页面  """
+    template_name = 'resume_form.html'
+    success_url = '/job_list/'
+    model = Resume
+    fields = ["username", "city", "phone",
+        "email", "apply_position", "gender",
+        "bachelor_school", "master_school", "major", "degree", "picture", "attachment",
+        "candidate_introduction", "work_experience", "project_experience"]
+
+
+    ### 从 URL 请求参数带入默认值
+    def get_initial(self):
+        initial = {}
+        for x in self.request.GET:
+            initial[x] = self.request.GET[x]
+        return initial
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.applicant = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())

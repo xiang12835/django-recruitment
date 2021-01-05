@@ -20,7 +20,8 @@ urlpatterns = [
     url(r'^job_detail/(?P<job_id>\d+)/$', views.job_detail, name='detail'),
     # path('job_detail/<int:job_id>/', views.detail, name='job_detail'),
 
-    # path('resume/add/', views.ResumeCreateView.as_view(), name='resume-add'),
+    # 提交简历
+    path('resume/add/', views.ResumeCreateView.as_view(), name='resume-add'),
     # path('resume/<int:pk>/', views.ResumeDetailView.as_view(), name='resume-detail'),
 
     # path('sentry-debug/', trigger_error),
