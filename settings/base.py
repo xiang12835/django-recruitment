@@ -16,7 +16,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# LOG_DIR = "/data/logs/recruitment/"
+LOG_DIR = "/tmp/logs/recruitment/"
 
 
 # Quick-start development settings - unsuitable for production
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'interview.performance.performance_logger_middleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -193,12 +194,12 @@ LOGGING = {
             'filename': os.path.join(os.path.dirname(BASE_DIR), 'recruitment.admin.log'),
         },
 
-        # 'performance': {
-        #     #'level': 'INFO',
-        #     'class': 'logging.FileHandler',
-        #     'formatter': 'simple',
-        #     'filename': os.path.join(LOG_DIR, 'recruitment.performance.log'),
-        # },
+        'performance': {
+            #'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'simple',
+            'filename': os.path.join(LOG_DIR, 'recruitment.performance.log'),
+        },
     },
 
     'root': {
@@ -212,10 +213,10 @@ LOGGING = {
             "level": "DEBUG",
         },
 
-        # "interview.performance": {
-        #     "handlers": ["console", "performance"],
-        #     "level": "INFO",
-        #     "propagate": False,
-        # },
+        "interview.performance": {
+            "handlers": ["console", "performance"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
 }
