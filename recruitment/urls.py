@@ -27,6 +27,9 @@ urlpatterns = [
     # grappelli 风格主题 url
     path('grappelli/', include('grappelli.urls')),
 
+    # 多语言
+    path('i18n/', include('django.conf.urls.i18n')),
+
     # 后台管理系统 url
     path('admin/', admin.site.urls),
 
