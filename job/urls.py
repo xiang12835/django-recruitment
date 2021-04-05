@@ -32,3 +32,7 @@ urlpatterns = [
     # path("", views.job_list, name="name"),
 
 ]
+
+if settings.DEBUG :
+    # 有 XSS 漏洞的视图页面，
+    urlpatterns += [url(r'^detail_resume/(?P<resume_id>\d+)/$', views.detail_resume, name='detail_resume'),]
