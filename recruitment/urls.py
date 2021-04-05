@@ -18,11 +18,52 @@ from django.contrib import admin
 from django.urls import path, include
 from django.utils.translation import gettext_lazy as _
 
+from rest_framework import routers, serializers, viewsets
+from django.contrib.auth.models import User
+from job.models import Job
+
+
+# https://www.django-rest-framework.org/
+
+# Serializers define the API representation.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'is_staff']
+
+# ViewSets define the view behavior.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class JobSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Job
+        fields = '__all__'
+
+
+class JobViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'jobs', JobViewSet)
 
 urlpatterns = [
 
     # 职位管理 url
     path("", include("job.urls")),
+
+    # django rest api & api auth (login/logout)
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
 
     # grappelli 风格主题 url
     path('grappelli/', include('grappelli.urls')),
