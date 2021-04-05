@@ -95,8 +95,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    # 'running': {
+    #         'ENGINE': 'django.db.backends.mysql', 
+    #         'NAME': 'running',                    
+    #         'USER': 'recruitment',                      
+    #         'PASSWORD': 'recruitment',                  
+    #         'HOST': 'running',
+    #         'PORT': '3306',
+    # },
 }
+
+DATABASE_ROUTERS = ['settings.router.DatabaseRouter']
 
 # Caches
 # redis cache is disabled, change "CACHES_redis" to "CACHES" to enable it
