@@ -36,8 +36,8 @@ def detail_resume(request, resume_id):
     try:
         resume = Resume.objects.get(pk=resume_id)
         content = "name: %s <br>  introduction: %s <br>" % (resume.username, resume.candidate_introduction)
-        # return HttpResponse(content) # 有 XSS 漏洞
-        return HttpResponse(html.escape(content))
+        # return HttpResponse(content) # 有 XSS 漏洞 
+        return HttpResponse(html.escape(content)) # 解决
     except Resume.DoesNotExist:
         raise Http404("resume does not exist")
 
