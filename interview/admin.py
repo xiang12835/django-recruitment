@@ -10,6 +10,7 @@ from interview.models import Candidate
 from job.models import Resume
 from libs.bot import dingtalk
 from django.utils.safestring import mark_safe
+from .tasks import send_dingtalk_message
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +26,8 @@ def notify_interviewer(modeladmin, request, queryset):
         interviewers = obj.first_interviewer_user.username + ";" + interviewers
     # 这里的消息发送到钉钉， 或者通过 Celery 异步发送到钉钉
     # dingtalk.send ("候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s" % (candidates, interviewers) )
-    dingtalk.send("@%s，睡麻痹起来嗨！" % candidates)
-    # send_dingtalk_message.delay("候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s" % (candidates, interviewers) )
+    # dingtalk.send("@%s，睡麻痹起来嗨！" % candidates)
+    send_dingtalk_message.delay("@%s，睡麻痹起来嗨！" % candidates)
     # messages.add_message(request, messages.INFO, '已经成功发送面试通知')
 
 
