@@ -79,6 +79,15 @@ class ResumeCreateView(LoginRequiredMixin, CreateView): # 简历的创建视图�
         "bachelor_school", "master_school", "major", "degree", "picture", "attachment",
         "candidate_introduction", "work_experience", "project_experience"]
 
+    def post(self, request, *args, **kwargs):
+        form = ResumeForm(request.POST, request.FILES)
+        if form.is_valid():
+            # <process form cleaned data>
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+
+        return render(request, self.template_name, {'form': form})
+
 
     ### 从 URL 请求参数带入默认值
     def get_initial(self):
