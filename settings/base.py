@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django_python3_ldap',
     'django_celery_beat',
     'rest_framework',
-    'job',
+    # 'job', # 应用不能重复注册，下面一行是手工注册 JobConfig
+    'job.apps.JobConfig',
     'interview'
 ]
 
