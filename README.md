@@ -14,3 +14,7 @@ python3 ./manage.py runserver 127.0.0.1:8000 --settings=settings.production
 http://127.0.0.1:8000 首页
 
 http://127.0.0.1:8000/admin 管理后台
+
+> 参考资料
+
+https://gitee.com/geektime-geekbang/django
