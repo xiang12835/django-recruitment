@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-import os
+import os, json
 
 from celery import Celery, shared_task
 
@@ -23,7 +23,9 @@ app.autodiscover_tasks()
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
+# 方法一：admin后台
 
+# 方法二：直接设置应用的 beat_schedule
 from celery.schedules import crontab
 
 # this is important to load the celery tasks
@@ -37,6 +39,8 @@ app.conf.beat_schedule = {
     },
 }
 
+
+# 方法三：系统启动时自动注册定时任务
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
     # Calls test('hello') every 10 seconds.
@@ -50,6 +54,24 @@ def setup_periodic_tasks(sender, **kwargs):
         crontab(hour=7, minute=30, day_of_week=1),
         test.s('Happy Mondays!'),
     )
+
+
+# 方法四：运行时添加定时任务
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
+
+# 示例：创建一个每10分钟执行的任务‌
+# 先创建定时策略
+schedule, _ = IntervalSchedule.objects.get_or_create(
+    every=10,
+    period=IntervalSchedule.MINUTES
+)
+# 在创建任务
+PeriodicTask.objects.create(
+    interval=schedule,
+    name='Dynamic Task Demo',
+    task='recruitment.celery.test',
+    args=json.dumps(['welcome']),
+)
 
 
 @app.task
